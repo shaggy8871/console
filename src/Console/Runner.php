@@ -72,14 +72,14 @@ class Runner
 
     }
 
-    public function setAppName($name)
+    public function setAppName($appName)
     {
 
         $this->appName = $appName;
 
     }
 
-    public function setAppVersion($version)
+    public function setAppVersion($appVersion)
     {
 
         $this->appVersion = $appVersion;
