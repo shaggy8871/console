@@ -123,7 +123,7 @@ class Runner
 
         $outp .= "Commands:\n";
         $outp .= "  " . implode("\n  ", $this->listCommands());
-        $outp .= "\n";
+        $outp .= "\n\n";
 
         return $outp;
 
