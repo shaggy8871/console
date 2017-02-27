@@ -68,7 +68,7 @@ class Args
                 // Long form, eg --some-arg=""
                 $argSplit = explode('=', $arg, 2);
                 $argTitle = preg_replace('/^--/', '', $argSplit[0]);
-                $argValue = str_replace('"', '', trim($argSplit[1]));
+                $argValue = (isset($argSplit[1]) ? str_replace('"', '', trim($argSplit[1])) : null);
                 $this->args[$argTitle] = $argValue;
                 $skipNext = false;
             } else
