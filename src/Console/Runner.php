@@ -20,7 +20,7 @@ class Runner
             $this->argv = $argv;
         }
 
-        $this->self = (isset($argv[0]) ? $this->argv[0] : '<filename>');
+        $this->self = (isset($this->argv[0]) ? $this->argv[0] : '<filename>');
 
     }
 
