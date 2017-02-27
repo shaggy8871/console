@@ -8,11 +8,11 @@ class Args
     protected $args = [];
     protected $commands = [];
 
-    public function __construct()
+    public function __construct(array $argv)
     {
 
-        if ($GLOBALS['argc'] > 1) {
-            $this->parseArgs($GLOBALS['argv']);
+        if (count($argv) > 1) {
+            $this->parseArgs($argv);
         }
 
     }
@@ -31,7 +31,7 @@ class Args
 
     }
 
-    public function getArgs()
+    public function getAll()
     {
 
         return $this->args;
@@ -45,6 +45,18 @@ class Args
 
     }
 
+    public function setAliases(array $aliases)
+    {
+
+        foreach($aliases as $k => $v) {
+            if (isset($this->args[$k])) {
+                $this->args[$v] = $this->args[$k];
+                unset($this->args[$k]);
+            }
+        }
+
+    }
+
     private function parseArgs(array $args)
     {
 
@@ -52,10 +64,6 @@ class Args
         $skipNext = false;
 
         foreach($args as $i => $arg) {
-            if ($skipNext) {
-                $skipNext = false;
-                continue;
-            }
             if (substr($arg, 0, 2) == '--') {
                 // Long form, eg --some-arg=""
                 $argSplit = explode('=', $arg, 2);
@@ -67,13 +75,16 @@ class Args
             if (substr($arg, 0, 1) == '-') {
                 // Short form, eg -v 123
                 $argTitle = preg_replace('/^-/', '', $arg);
-                $argValue = (isset($args[$i + 1]) ? trim($args[$i + 1]) : null);
+                $argValue = (isset($args[$i + 1]) && (substr($args[$i + 1], 0, 1) != '-') ? trim($args[$i + 1]) : null);
                 $this->args[$argTitle] = $argValue;
                 $skipNext = true;
             } else {
+                if ($skipNext) {
+                    $skipNext = false;
+                    continue;
+                }
                 // Command form, eg app:create
                 $this->commands[] = $arg;
-                $skipNext = false;
             }
         }
 

@@ -46,14 +46,21 @@ Example command file:
 namespace Commands;
 
 use Console\CommandInterface;
+use Console\Args;
 
 class CustomCommand implements CommandInterface
 {
 
-    public function execute(array $args)
+    public function execute(Args $args)
     {
 
+        // Convert short-form to long-form arguments
+        $args->setAliases([
+            'l' => 'longform'
+        ]);
+
         // Write custom code
+        // ... Do something with $args->longform or $args->getAll()
 
     }
 
@@ -63,7 +70,6 @@ class CustomCommand implements CommandInterface
         return 'Description of this command';
 
     }
-
 
 }
 ```

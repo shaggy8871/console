@@ -5,6 +5,6 @@ namespace Console;
 interface CommandInterface
 {
 
-    public function execute(array $args);
+    public function execute(Args $args);
 
 }
