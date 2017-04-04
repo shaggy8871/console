@@ -74,16 +74,20 @@ class CustomCommand implements CommandInterface
 }
 ```
 
-### Color coding
+### Color decorating
 
-To color-code output, add the following to any output:
+To decorate output with colors or styles, use the following method:
 
 ```php
 <?php
-use Console\Color;
 
-echo Color::apply('Hello, world!', 'red bold bg_white');
+use Console\Decorate;
+
+echo Decorate::color('Hello, world!', 'red bold bg_white');
+
 ```
+
+### Color reference
 
 | Colors       | Modifiers    | Backgrounds | 
 | ------------ | ------------ | ----------- | 

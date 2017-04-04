@@ -6,7 +6,7 @@ namespace Console;
  * Outputs color codes to the terminal
  */
 
-class Color
+class Decorate
 {
 
     static protected $validColors = [
@@ -77,7 +77,7 @@ class Color
     /**
      * Return the text with one or more color code prefixes applied
      */
-    public static function apply($text, $colors)
+    public static function color($text, $colors)
     {
 
         $colors = explode(' ', $colors);

@@ -2,9 +2,9 @@
 namespace Console\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Console\Color;
+use Console\Decorate;
 
-class ColorsTest extends TestCase
+class DecorateTest extends TestCase
 {
 
     public function testColorIsRed()
@@ -12,7 +12,7 @@ class ColorsTest extends TestCase
 
         $this->expectOutputString("\033[0;31mHello, world!\033[0m");
 
-        echo Color::apply('Hello, world!', 'red');
+        echo Decorate::color('Hello, world!', 'red');
 
     }
 
@@ -21,7 +21,7 @@ class ColorsTest extends TestCase
 
         $this->expectOutputString("\033[1;31mHello, world!\033[0m");
 
-        echo Color::apply('Hello, world!', 'bold_red');
+        echo Decorate::color('Hello, world!', 'bold_red');
 
     }
 
@@ -30,7 +30,7 @@ class ColorsTest extends TestCase
 
         $this->expectOutputString("\033[1;31m\033[107mHello, world!\033[0m");
 
-        echo Color::apply('Hello, world!', 'bold red bg_white');
+        echo Decorate::color('Hello, world!', 'bold red bg_white');
 
     }
 
