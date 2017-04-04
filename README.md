@@ -74,9 +74,12 @@ class CustomCommand implements CommandInterface
 }
 ```
 
+### Color coding
+
 To color-code output, add the following to any output:
 
-```
+```php
+<?php
 use Console\Color;
 
 echo Color::apply('Hello, world!', 'red bold bg_white');
