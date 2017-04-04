@@ -74,3 +74,45 @@ class CustomCommand implements CommandInterface
 }
 ```
 
+To color-code output, add the following to any output:
+
+```
+use Console\Color;
+
+echo Color::apply('Hello, world!', 'red bold bg_white');
+```
+
+| Colors       |
+| ------------ |
+| black        |
+| red          |
+| green        |
+| yellow       |
+| blue         |
+| purple       |
+| cyan         |
+| light_gray   |
+| dark_gray    |
+| light_red    |
+| light_green  |
+| light_yellow |
+| light_blue   |
+| light_purple |
+| light_cyan   |
+| white        |
+
+| Modifiers    |
+| ------------ |
+| bold         |
+| underline    |
+
+| Backgrounds  |
+| ------------ |
+| bg_black     |
+| bg_red       |
+| bg_green     |
+| bg_yellow    |
+| bg_blue      |
+| bg_purple    |
+| bg_cyan      |
+| bg_white     |

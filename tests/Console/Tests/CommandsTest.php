@@ -2,6 +2,8 @@
 namespace Console\Tests;
 
 use PHPUnit\Framework\TestCase;
+use Console\Runner;
+use Console\Exception\CommandNotFoundException;
 
 class CommandsTest extends TestCase
 {
@@ -11,7 +13,7 @@ class CommandsTest extends TestCase
 
         $this->expectOutputString("AppSimple:" . print_r([], true));
 
-        $console = new \Console\Runner();
+        $console = new Runner();
         // Inject arguments
         $console->setArguments([
             'test.php',
@@ -33,7 +35,7 @@ class CommandsTest extends TestCase
             'long' => 'argument'
         ], true));
 
-        $console = new \Console\Runner();
+        $console = new Runner();
         // Inject arguments
         $console->setArguments([
             'test.php',
@@ -57,7 +59,7 @@ class CommandsTest extends TestCase
             's' => 'arg'
         ], true));
 
-        $console = new \Console\Runner();
+        $console = new Runner();
         // Inject arguments
         $console->setArguments([
             'test.php',
@@ -83,7 +85,7 @@ class CommandsTest extends TestCase
             'a' => 'b'
         ], true));
 
-        $console = new \Console\Runner();
+        $console = new Runner();
         // Inject arguments
         $console->setArguments([
             'test.php',
@@ -110,7 +112,7 @@ class CommandsTest extends TestCase
             'longform' => 'argument' // must be second
         ], true));
 
-        $console = new \Console\Runner();
+        $console = new Runner();
         // Inject arguments
         $console->setArguments([
             'test.php',
@@ -132,9 +134,9 @@ class CommandsTest extends TestCase
     public function testCommandInstantiationWithInvalidCommand()
     {
 
-        $this->expectException(\Console\Exception\CommandNotFoundException::class);
+        $this->expectException(CommandNotFoundException::class);
 
-        $console = new \Console\Runner();
+        $console = new Runner();
         // Inject arguments
         $console->setArguments([
             'test.php',
@@ -152,7 +154,7 @@ class CommandsTest extends TestCase
     public function testCommandInstantiationWithNoCommand()
     {
 
-        $console = new \Console\Runner();
+        $console = new Runner();
         // Register handlers
         $console->registerAll([
             'app:simple' => new Commands\AppSimple()
