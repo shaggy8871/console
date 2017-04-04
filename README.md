@@ -85,37 +85,21 @@ use Console\Color;
 echo Color::apply('Hello, world!', 'red bold bg_white');
 ```
 
-| Colors       |
-| ------------ |
-| black        |
-| red          |
-| green        |
-| yellow       |
-| blue         |
-| purple       |
-| cyan         |
-| light_gray   |
-| dark_gray    |
-| light_red    |
-| light_green  |
-| light_yellow |
-| light_blue   |
-| light_purple |
-| light_cyan   |
-| white        |
-
-| Modifiers    |
-| ------------ |
-| bold         |
-| underline    |
-
-| Backgrounds  |
-| ------------ |
-| bg_black     |
-| bg_red       |
-| bg_green     |
-| bg_yellow    |
-| bg_blue      |
-| bg_purple    |
-| bg_cyan      |
-| bg_white     |
+| Colors       | Modifiers    | Backgrounds | 
+| ------------ | ------------ | ----------- | 
+| black        | bold         | bg_black    |
+| red          | underline    | bg_red      |
+| green        |              | bg_green    |
+| yellow       |              | bg_yellow   |
+| blue         |              | bg_blue     |
+| purple       |              | bg_purple   |
+| cyan         |              | bg_cyan     |
+| light_gray   |              | bg_white    |
+| dark_gray    |              |             |
+| light_red    |              |             |
+| light_green  |              |             |
+| light_yellow |              |             |
+| light_blue   |              |             |
+| light_purple |              |             |
+| light_cyan   |              |             |
+| white        |              |             |
