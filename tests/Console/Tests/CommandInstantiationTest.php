@@ -5,7 +5,7 @@ use PHPUnit\Framework\TestCase;
 use Console\Runner;
 use Console\Exception\CommandNotFoundException;
 
-class CommandsTest extends TestCase
+class CommandInstantiationTest extends TestCase
 {
 
     public function testCommandInstantiation()
@@ -23,6 +23,24 @@ class CommandsTest extends TestCase
         $console->registerAll([
             'app:simple' => new Commands\AppSimple()
         ]);
+        // Run test
+        $console->run();
+
+    }
+
+    public function testCommandInstantiationRegisterSingle()
+    {
+
+        $this->expectOutputString("AppSimple:" . print_r([], true));
+
+        $console = new Runner();
+        // Inject arguments
+        $console->setArguments([
+            'test.php',
+            'app:simple'
+        ]);
+        // Register handlers
+        $console->register('app:simple', new Commands\AppSimple());
         // Run test
         $console->run();
 
@@ -165,6 +183,22 @@ class CommandsTest extends TestCase
         ]);
 
         $this->expectOutputString($console->getHelp());
+
+        // Run test
+        $console->run();
+
+    }
+
+    public function testCommandInstantiationWithDescription()
+    {
+
+        $console = new Runner();
+        // Register handlers
+        $console->registerAll([
+            'app:simple' => new Commands\AppSimple()
+        ]);
+
+        $this->expectOutputRegex('/app:simple - Simple command interface/');
 
         // Run test
         $console->run();

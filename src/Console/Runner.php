@@ -24,7 +24,7 @@ class Runner
 
     }
 
-    public function register($name, CommandInterface $command)
+    public function register($name, $command)
     {
 
         if (!isset($this->commands[$name])) {
@@ -108,10 +108,21 @@ class Runner
         }
 
         foreach($commands as $command) {
-            if (isset($this->commands[$command])) {
-                $commandInstance = (new $this->commands[$command])->execute($args);
+            if (!isset($this->commands[$command])) {
+                throw new Exception\CommandNotFoundException("Command not found: '" . $command . "'");
+            }
+            if ($this->commands[$command] instanceof CommandInterface) {
+                $this->commands[$command]->execute($args);
             } else {
-                throw new Exception\CommandNotFoundException($command);
+                $commandParsed = $this->parseCommand($command, $this->commands[$command]);
+                if (!class_exists($commandParsed->class)) {
+                    throw new Exception\CommandClassNotValid("Class not found for command: '" . $command . "'");
+                }
+                $commandInstance = new $commandParsed->class;
+                if (!($commandInstance instanceof CommandInterface)) {
+                    throw new Exception\CommandClassNotValid("Class '" . $commandParsed->class . "' does not extend CommandInterface");
+                }
+                $commandInstance->execute($args);
             }
         }
 
@@ -145,10 +156,41 @@ class Runner
         $commandsFormatted = [];
 
         foreach($this->commands as $name => $command) {
-            $commandsFormatted[] = $name . (method_exists($command, 'getDescription') ? ' - ' . $command->getDescription() : '');
+            try {
+                $command = $this->parseCommand($name, $command);
+                $commandsFormatted[] = $name . ($command->description ? ' - ' . $command->description : '');
+            } catch (Exception\CommandClassNotValid $e) {
+                $commandsFormatted[] = $name . ' (error parsing command)';
+            }
         }
 
         return $commandsFormatted;
+
+    }
+
+    private function parseCommand($name, $command)
+    {
+
+        if ($command instanceof CommandInterface) {
+            return (object) [
+                'class' => get_class($command),
+                'description' => method_exists($command, 'getDescription') ? $command->getDescription() : '',
+            ];
+        } else
+        if (is_array($command)) {
+            if (!isset($command['class'])) {
+                throw new Exception\CommandClassNotValid("Array does not contain 'class' value for command '" . $name . "'");
+            }
+            return (object) [
+                'class' => $command['class'],
+                'description' => isset($command['description']) ? $command['description'] : ''
+            ];
+        } else {
+            return (object) [
+                'class' => $command,
+                'description' => ''
+            ];
+        }
 
     }
 
