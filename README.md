@@ -26,19 +26,23 @@ $console = new Console\Runner();
 
 // Add one or more commands here
 $console->registerAll([
-    'app:command' => new Commands\CustomCommand()
+    'app:command' => [
+        'class' => 'Commands\CustomCommand',
+        'description' => 'Add your custom command description'
+    ]
 ]);
 
 // Start your engines...
 try {
     $console->run();
 } catch(Console\Exception\CommandNotFoundException $e) {
-    // Handle errors
+    echo $e->getMessage() . "\n--------\n\n" . $console->getHelp();
+    die();
 }
 
 ```
 
-Example command file:
+Example command class:
 
 ```php
 <?php
@@ -61,13 +65,6 @@ class CustomCommand implements CommandInterface
 
         // Write custom code
         // ... Do something with $args->longform or $args->getAll()
-
-    }
-
-    public function getDescription()
-    {
-
-        return 'Description of this command';
 
     }
 
