@@ -3,7 +3,7 @@
 namespace Console;
 
 /**
- * Outputs color codes to the terminal
+ * Outputs cursor movement and color codes to the terminal
  */
 
 class Decorate
@@ -114,6 +114,83 @@ class Decorate
             $colorCode .= "\033[" . static::$validColors[$color] . "m";
         }
         return $colorCode . $text . "\033[0m";
+
+    }
+
+    public static function beep()
+    {
+
+        return "\007";
+
+    }
+
+    public static function saveCursorPos()
+    {
+
+        return "\033[s";
+
+    }
+
+    public static function restoreCursorPos()
+    {
+
+        return "\033[u";
+
+    }
+
+    public static function cursorForward()
+    {
+
+        return "\033[C";
+
+    }
+
+    public static function cursorBackward()
+    {
+
+        return "\033[D";
+
+    }
+
+    public static function cursorTo($row, $col)
+    {
+
+        return "\033[" . $row . ";" . $col . "H";
+
+    }
+
+    public static function cursorToCol($col)
+    {
+
+        return "\033[" . $col . "G";
+
+    }
+
+    public static function cursorUp($row)
+    {
+
+        return "\033[" . $row . "A";
+
+    }
+
+    public static function cursorDown($row)
+    {
+
+        return "\033[" . $row . "B";
+
+    }
+
+    public static function moveToStart()
+    {
+
+        return "\r";
+
+    }
+
+    public static function clearToEnd()
+    {
+
+        return "\033[K";
 
     }
 
