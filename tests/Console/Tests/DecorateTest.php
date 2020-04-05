@@ -34,6 +34,24 @@ class DecorateTest extends TestCase
 
     }
 
+    public function testVgaForegroundBrightRed()
+    {
+
+        $this->expectOutputString("\033[0;31m\033[38;5;9mHello, world!\033[0m");
+
+        echo Decorate::color('Hello, world!', 'red ' . Decorate::vgaColor(9));
+
+    }
+
+    public function testVgaBackgroundBrightRed()
+    {
+
+        $this->expectOutputString("\033[0;31m\033[48;5;9mHello, world!\033[0m");
+
+        echo Decorate::color('Hello, world!', 'red ' . Decorate::vgaBackground(9));
+
+    }
+
     public function testBeep()
     {
 

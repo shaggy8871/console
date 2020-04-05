@@ -9,6 +9,9 @@ namespace Console;
 class Decorate
 {
 
+    const FG_256_PREFIX = '38;5;';
+    const BG_256_PREFIX = '48;5;';
+
     static protected $validColors = [
         // Foreground colors
         'black' => '0;30',
@@ -80,18 +83,21 @@ class Decorate
     public static function color($text, $colors)
     {
 
-        $colors = explode(' ', $colors);
+        $colors = !is_array($colors) ? explode(' ', $colors) : $colors;
         $modBold = false;
         $modUnderline = false;
         $backgroundColors = [];
         $foregroundColors = [];
+        $vgaColors = [];
         // Look for bold, underline and hi modifiers
         foreach($colors as $color) {
             if ($color == 'bold') {
                 $modBold = true;
+                continue;
             }
             if ($color == 'underline') {
                 $modUnderline = true;
+                continue;
             }
             if (substr($color, 0, 3) == 'bg_') {
                 if (isset(static::$validColors[$color])) {
@@ -100,21 +106,38 @@ class Decorate
             } else {
                 if (isset(static::$validColors[$color])) {
                     $foregroundColors[] = $color;
+                } else
+                if (substr($color, 0, strlen(static::FG_256_PREFIX)) == static::FG_256_PREFIX || substr($color, 0, strlen(static::BG_256_PREFIX)) == static::BG_256_PREFIX) {
+                    $vgaColors[] = $color;
                 }
             }
         }
         $colorCode = '';
-        // Foreground colors next
+        // Foreground colors first
         foreach($foregroundColors as $color) {
             $color = ($modBold ? 'bold_' : ($modUnderline ? 'underline_' : '')) . $color;
             $colorCode .= "\033[" . static::$validColors[$color] . "m";
         }
-        // Background colors first
+        // Background colors next
         foreach($backgroundColors as $color) {
             $colorCode .= "\033[" . static::$validColors[$color] . "m";
         }
+        // Finally VGA (256) colors
+        foreach($vgaColors as $color) {
+            $colorCode .= "\033[" . $color . "m";
+        }
         return $colorCode . $text . "\033[0m";
 
+    }
+
+    public static function vgaColor(int $color)
+    {
+        return static::FG_256_PREFIX . $color;
+    }
+
+    public static function vgaBackground(int $color)
+    {
+        return static::BG_256_PREFIX . $color;
     }
 
     public static function beep()

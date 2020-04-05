@@ -104,3 +104,17 @@ echo Decorate::color('Hello, world!', 'red bold bg_white');
 | light_purple |              |             |
 | light_cyan   |              |             |
 | white        |              |             |
+
+To introduce a [256-color VGA palette](https://jonasjacek.github.io/colors/), use the handy `vgaColor` and `vgaBackground` helpers.
+
+```php
+<?php
+
+use Console\Decorate;
+
+echo Decorate::color('Hello, world!', [
+    Decorate::vgaBackground(9), 
+    Decorate::vgaColor(52)
+]);
+
+```
