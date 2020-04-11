@@ -84,11 +84,11 @@ class Decorate
      * Return the text with one or more color code prefixes applied
      * 
      * @param string the text to color
-     * @param string the colors or attributes to apply
+     * @param mixed the colors or attributes to apply
      * 
      * @return string
      */
-    public static function color(string $text, string $colors): string
+    public static function color(string $text, $colors): string
     {
         $colors = !is_array($colors) ? explode(' ', $colors) : $colors;
         $modBold = false;

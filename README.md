@@ -118,3 +118,36 @@ echo Decorate::color('Hello, world!', [
 ]);
 
 ```
+
+## StdOut
+
+Some console applications need the ability to enable or disable ansi output depending on whether output is rendering to the console or to a log file. The StdOut class allows for switching between the two.
+
+To render one or more decorated strings:
+
+```php
+<?php
+
+use Console\StdOut;
+
+StdOut::write([
+    ["Hello, world!\n", 'red'],
+    ["This is a second line, but in green\n", 'green']
+]);
+```
+
+To disable ansi but still output, call `disableAnsi()` first. All ansi characters will be removed in future output. You can call `enableAnsi()` to re-enable ansi mode.
+
+```php
+<?php
+
+use Console\StdOut;
+
+StdOut::disableAnsi();
+StdOut::write([
+    ["Hello, world!\n", 'red'],
+    ["This is a second line, but in green\n", 'green']
+]);
+
+```
+
