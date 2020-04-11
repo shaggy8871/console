@@ -84,7 +84,7 @@ class Args
     public function setAliases(array $aliases): void
     {
         foreach($aliases as $k => $v) {
-            if (isset($this->args[$k])) {
+            if (array_key_exists($k, $this->args)) {
                 $this->args[$v] = $this->args[$k];
                 unset($this->args[$k]);
             }
