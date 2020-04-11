@@ -10,7 +10,6 @@ class CommandArrayTest extends TestCase
 
     public function testCommandArray()
     {
-
         $this->expectOutputString("AppSimple:" . print_r([], true));
 
         $console = new Runner();
@@ -27,12 +26,10 @@ class CommandArrayTest extends TestCase
         ]);
         // Run test
         $console->run();
-
     }
 
     public function testCommandArrayRegisterSingle()
     {
-
         $this->expectOutputString("AppSimple:" . print_r([], true));
 
         $console = new Runner();
@@ -45,12 +42,10 @@ class CommandArrayTest extends TestCase
         $console->register('app:simple', 'Console\Tests\Commands\AppSimple');
         // Run test
         $console->run();
-
     }
 
     public function testCommandArrayWithLongArgument()
     {
-
         $this->expectOutputString("AppSimple:" . print_r([
             'long' => 'argument'
         ], true));
@@ -70,12 +65,10 @@ class CommandArrayTest extends TestCase
         ]);
         // Run test
         $console->run();
-
     }
 
     public function testCommandArrayWithLongAndShortArgument()
     {
-
         $this->expectOutputString("AppSimple:" . print_r([
             'long' => 'argument',
             's' => 'arg'
@@ -98,12 +91,10 @@ class CommandArrayTest extends TestCase
         ]);
         // Run test
         $console->run();
-
     }
 
     public function testCommandArrayWithStandaloneShortArgument()
     {
-
         $this->expectOutputString("AppSimple:" . print_r([
             's' => '',
             'a' => 'b'
@@ -126,12 +117,10 @@ class CommandArrayTest extends TestCase
         ]);
         // Run test
         $console->run();
-
     }
 
     public function testCommandArrayWithAliases()
     {
-
         // For this test, args get rewritten which impacts the order of the array
         $this->expectOutputString("AppSimple:" . print_r([
             'a' => 'b', // must be first
@@ -156,12 +145,10 @@ class CommandArrayTest extends TestCase
         ]);
         // Run test
         $console->run();
-
     }
 
     public function testCommandArrayWithInvalidCommand()
     {
-
         $this->expectException(CommandNotFoundException::class);
 
         $console = new Runner();
@@ -178,12 +165,10 @@ class CommandArrayTest extends TestCase
         ]);
         // Run test
         $console->run();
-
     }
 
     public function testCommandArrayWithNoCommand()
     {
-
         $console = new Runner();
         // Register handlers
         $console->registerAll([
@@ -200,12 +185,10 @@ class CommandArrayTest extends TestCase
 
         // Run test
         $console->run();
-
     }
 
     public function testCommandArrayWithDescription()
     {
-
         $console = new Runner();
         // Register handlers
         $console->registerAll([
@@ -219,12 +202,10 @@ class CommandArrayTest extends TestCase
 
         // Run test
         $console->run();
-
     }
 
     public function testCommandArrayWithDescriptionRegisterSingle()
     {
-
         $console = new Runner();
         // Register handlers
         $console->register('app:simple', [
@@ -236,7 +217,6 @@ class CommandArrayTest extends TestCase
 
         // Run test
         $console->run();
-
     }
 
 }

@@ -13,7 +13,6 @@ class Runner
 
     public function __construct(array $argv = [])
     {
-
         if (empty($argv)) {
             $this->argv = $GLOBALS['argv'];
         } else {
@@ -21,12 +20,18 @@ class Runner
         }
 
         $this->self = (isset($this->argv[0]) ? $this->argv[0] : '<filename>');
-
     }
 
-    public function register($name, $command)
+    /**
+     * Register a command
+     * 
+     * @param string the command name
+     * @param mixed the command in array or class form
+     * 
+     * @return Console\Runner
+     */
+    public function register(string $name, $command): self
     {
-
         if (!isset($this->commands[$name])) {
             $this->commands[$name] = $command;
         } else {
@@ -34,23 +39,33 @@ class Runner
         }
 
         return $this;
-
     }
 
-    public function registerAll(array $commands)
+    /**
+     * Register all commands in one go
+     * 
+     * @param array the commands with name/command pairs
+     * 
+     * @return Console\Runner
+     */
+    public function registerAll(array $commands): self
     {
-
         foreach($commands as $name => $command) {
             $this->register($name, $command);
         }
 
         return $this;
-
     }
 
-    public function deregister($name)
+    /**
+     * De-register a command
+     * 
+     * @param string the command name
+     * 
+     * @return Console\Runner
+     */
+    public function deregister(string $name): self
     {
-
         if (isset($this->commands[$name])) {
             unset($this->commands[$name]);
         } else {
@@ -58,47 +73,71 @@ class Runner
         }
 
         return $this;
-
     }
 
-    public function deregisterAll(array $commands)
+    /**
+     * De-register all commands in the specified array
+     * 
+     * @param array the commands to de-register
+     * 
+     * @return Console\Runner
+     */
+    public function deregisterAll(array $commands): self
     {
-
         foreach($commands as $name) {
             $this->deregister($name);
         }
 
         return $this;
-
     }
 
-    public function setAppName($appName, $appVersion = null)
+    /**
+     * Set the app name
+     * 
+     * @param string the app name
+     * @param string the app version
+     * 
+     * @return void
+     */
+    public function setAppName(string $appName, ?string $appVersion = null): void
     {
-
         $this->appName = $appName;
         if ($appVersion) {
             $this->appVersion = $appVersion;
         }
-
     }
 
-    public function setAppVersion($appVersion)
+    /**
+     * Set the app version
+     * 
+     * @param string the app version
+     * 
+     * @return void
+     */
+    public function setAppVersion(string $appVersion): void
     {
-
         $this->appVersion = $appVersion;
-
     }
 
-    public function setArguments(array $argv)
+    /**
+     * Set the arguments manually
+     * 
+     * @param array the list of arguments
+     * 
+     * @return void
+     */
+    public function setArguments(array $argv): void
     {
-
         $this->argv = $argv;
-
     }
 
-    public function run()
+    /**
+     * Run the console app
+     * 
+     * @return void
+     */
+    public function run(): void
     {
-
         $args = new Args($this->argv);
 
         $commands = $args->getCommands();
@@ -125,12 +164,15 @@ class Runner
                 $commandInstance->execute($args);
             }
         }
-
     }
 
-    public function getHelp()
+    /**
+     * Get the help text
+     * 
+     * @return string
+     */
+    public function getHelp(): string
     {
-
         $outp  = '';
         $outp .= sprintf("%s %s\n\n", $this->appName, $this->appVersion);
         $outp .= sprintf("usage: %s [command] [arguments]\n\n", $this->self);
@@ -140,19 +182,25 @@ class Runner
         $outp .= "\n\n";
 
         return $outp;
-
     }
 
-    public function showHelp()
+    /**
+     * Show the help text
+     * 
+     * @return void
+     */
+    public function showHelp(): void
     {
-
         echo $this->getHelp();
-
     }
 
-    public function listCommands()
+    /**
+     * List the commands available
+     * 
+     * @return array
+     */
+    public function listCommands(): array
     {
-
         $commandsFormatted = [];
 
         foreach($this->commands as $name => $command) {
@@ -165,12 +213,18 @@ class Runner
         }
 
         return $commandsFormatted;
-
     }
 
-    private function parseCommand($name, $command)
+    /**
+     * Parse a single command into an array
+     * 
+     * @param string the command name
+     * @param mixed the command
+     * 
+     * @return stdClass
+     */
+    private function parseCommand(string $name, $command): \stdClass
     {
-
         if ($command instanceof CommandInterface) {
             return (object) [
                 'class' => get_class($command),

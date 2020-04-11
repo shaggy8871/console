@@ -5,61 +5,101 @@ namespace Console;
 class Args
 {
 
+    /**
+     * @var array
+     */
     protected $args = [];
+
+    /**
+     * @var array
+     */
     protected $commands = [];
 
     public function __construct(array $argv)
     {
-
         if (count($argv) > 1) {
             $this->parseArgs($argv);
         }
-
     }
 
-    public function __get($name)
+    /**
+     * Returns an argument by name
+     * 
+     * @param string
+     * 
+     * @return string|null
+     */
+    public function __get(string $name): ?string
     {
-
-        return (isset($this->args[$name]) ? $this->args[$name] : null);
-
+        return (array_key_exists($name, $this->args) ? $this->args[$name] : null);
     }
 
-    public function __isset($name)
+    /**
+     * Returns true if the argument is set
+     * 
+     * @param string
+     * 
+     * @return bool
+     */
+    public function __isset(string $name): bool
     {
-
-        return isset($this->args[$name]);
-
+        return array_key_exists($name, $this->args);
     }
 
-    public function getAll()
+    /**
+     * Returns a list of arguments supplied in key/value pairs
+     * 
+     * @return array
+     */
+    public function getArgs(): array
     {
-
         return $this->args;
-
     }
 
-    public function getCommands()
+    /**
+     * Returns a list of commands supplied
+     * 
+     * @return array
+     */
+    public function getCommands(): array
     {
-
         return $this->commands;
-
     }
 
-    public function setAliases(array $aliases)
+    /**
+     * Alias function to getArgs()
+     */
+    public function getAll(): array
     {
+        return $this->getArgs();
+    }
 
+    /**
+     * Set aliases (and remove the original)
+     * 
+     * @param array a list of aliases in key/value form
+     * 
+     * @return void
+     */
+    public function setAliases(array $aliases): void
+    {
         foreach($aliases as $k => $v) {
             if (isset($this->args[$k])) {
                 $this->args[$v] = $this->args[$k];
                 unset($this->args[$k]);
             }
         }
-
     }
 
-    private function parseArgs(array $args)
+    /**
+     * Parse the arguments list into parameters and commands
+     * 
+     * @param array the console arguments
+     * 
+     * @return void
+     */
+    private function parseArgs(array $args): void
     {
-
         array_shift($args); // remove filename
         $skipNext = false;
 
@@ -87,7 +127,6 @@ class Args
                 $this->commands[] = $arg;
             }
         }
-
     }
 
 }

@@ -10,7 +10,6 @@ class CommandStringTest extends TestCase
 
     public function testCommandString()
     {
-
         $this->expectOutputString("AppSimple:" . print_r([], true));
 
         $console = new Runner();
@@ -25,12 +24,10 @@ class CommandStringTest extends TestCase
         ]);
         // Run test
         $console->run();
-
     }
 
     public function testCommandStringRegisterSingle()
     {
-
         $this->expectOutputString("AppSimple:" . print_r([], true));
 
         $console = new Runner();
@@ -43,12 +40,10 @@ class CommandStringTest extends TestCase
         $console->register('app:simple', 'Console\Tests\Commands\AppSimple');
         // Run test
         $console->run();
-
     }
 
     public function testCommandStringWithLongArgument()
     {
-
         $this->expectOutputString("AppSimple:" . print_r([
             'long' => 'argument'
         ], true));
@@ -66,12 +61,10 @@ class CommandStringTest extends TestCase
         ]);
         // Run test
         $console->run();
-
     }
 
     public function testCommandStringWithLongAndShortArgument()
     {
-
         $this->expectOutputString("AppSimple:" . print_r([
             'long' => 'argument',
             's' => 'arg'
@@ -92,12 +85,10 @@ class CommandStringTest extends TestCase
         ]);
         // Run test
         $console->run();
-
     }
 
     public function testCommandStringWithStandaloneShortArgument()
     {
-
         $this->expectOutputString("AppSimple:" . print_r([
             's' => '',
             'a' => 'b'
@@ -118,12 +109,10 @@ class CommandStringTest extends TestCase
         ]);
         // Run test
         $console->run();
-
     }
 
     public function testCommandStringWithAliases()
     {
-
         // For this test, args get rewritten which impacts the order of the array
         $this->expectOutputString("AppSimple:" . print_r([
             'a' => 'b', // must be first
@@ -146,12 +135,10 @@ class CommandStringTest extends TestCase
         ]);
         // Run test
         $console->run();
-
     }
 
     public function testCommandStringWithInvalidCommand()
     {
-
         $this->expectException(CommandNotFoundException::class);
 
         $console = new Runner();
@@ -166,12 +153,10 @@ class CommandStringTest extends TestCase
         ]);
         // Run test
         $console->run();
-
     }
 
     public function testCommandStringWithNoCommand()
     {
-
         $console = new Runner();
         // Register handlers
         $console->registerAll([
@@ -186,12 +171,10 @@ class CommandStringTest extends TestCase
 
         // Run test
         $console->run();
-
     }
 
     public function testCommandStringWithDescription()
     {
-
         $console = new Runner();
         // Register handlers
         $console->registerAll([
@@ -205,12 +188,10 @@ class CommandStringTest extends TestCase
 
         // Run test
         $console->run();
-
     }
 
     public function testCommandStringWithDescriptionRegisterSingle()
     {
-
         $console = new Runner();
         // Register handlers
         $console->register('app:simple', [
@@ -222,7 +203,6 @@ class CommandStringTest extends TestCase
 
         // Run test
         $console->run();
-
     }
 
 }

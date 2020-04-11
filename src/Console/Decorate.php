@@ -12,6 +12,9 @@ class Decorate
     const FG_256_PREFIX = '38;5;';
     const BG_256_PREFIX = '48;5;';
 
+    /**
+     * @var array
+     */
     static protected $validColors = [
         // Foreground colors
         'black' => '0;30',
@@ -79,10 +82,14 @@ class Decorate
 
     /**
      * Return the text with one or more color code prefixes applied
+     * 
+     * @param string the text to color
+     * @param string the colors or attributes to apply
+     * 
+     * @return string
      */
-    public static function color($text, $colors)
+    public static function color(string $text, string $colors): string
     {
-
         $colors = !is_array($colors) ? explode(' ', $colors) : $colors;
         $modBold = false;
         $modUnderline = false;
@@ -127,94 +134,149 @@ class Decorate
             $colorCode .= "\033[" . $color . "m";
         }
         return $colorCode . $text . "\033[0m";
-
     }
 
-    public static function vgaColor(int $color)
+    /**
+     * Return a 256-color palette color code
+     * 
+     * @param int the color number
+     * 
+     * @return string
+     */
+    public static function vgaColor(int $color): string
     {
         return static::FG_256_PREFIX . $color;
     }
 
+    /**
+     * Return a 256-color palette background color code
+     * 
+     * @param int the color number
+     * 
+     * @return string
+     */
     public static function vgaBackground(int $color)
     {
         return static::BG_256_PREFIX . $color;
     }
 
-    public static function beep()
+    /**
+     * Make a sound
+     * 
+     * @return string
+     */
+    public static function beep(): string
     {
-
         return "\007";
-
     }
 
-    public static function saveCursorPos()
+    /**
+     * Save the cursor position
+     * 
+     * @return string
+     */
+    public static function saveCursorPos(): string
     {
-
         return "\033[s";
-
     }
 
-    public static function restoreCursorPos()
+    /**
+     * Restore the cursor position
+     * 
+     * @return string
+     */
+    public static function restoreCursorPos(): string
     {
-
         return "\033[u";
-
     }
 
-    public static function cursorForward()
+    /**
+     * Move the cursor forward
+     * 
+     * @return string
+     */
+    public static function cursorForward(): string
     {
-
         return "\033[C";
-
     }
 
-    public static function cursorBackward()
+    /**
+     * Move the cursor backward
+     * 
+     * @return string
+     */
+    public static function cursorBackward(): string
     {
-
         return "\033[D";
-
     }
 
-    public static function cursorTo($row, $col)
+    /**
+     * Move the cursor to row, col
+     * 
+     * @param int the row
+     * @param int the column
+     * 
+     * @return string
+     */
+    public static function cursorTo(int $row, int $col): string
     {
-
         return "\033[" . $row . ";" . $col . "H";
-
     }
 
-    public static function cursorToCol($col)
+    /**
+     * Move the cursor to a specific column
+     * 
+     * @param int the column
+     * 
+     * @return string
+     */
+    public static function cursorToCol(int $col): string
     {
-
         return "\033[" . $col . "G";
-
     }
 
-    public static function cursorUp($row)
+    /**
+     * Move the cursor up to row
+     * 
+     * @param int the row
+     * 
+     * @return string
+     */
+    public static function cursorUp(int $row): string
     {
-
         return "\033[" . $row . "A";
-
     }
 
-    public static function cursorDown($row)
+    /**
+     * Move the cursor down to row
+     * 
+     * @param int the row
+     * 
+     * @return string
+     */
+    public static function cursorDown(int $row): string
     {
-
         return "\033[" . $row . "B";
-
     }
 
-    public static function moveToStart()
+    /**
+     * Move to the start of the line
+     * 
+     * @return string
+     */
+    public static function moveToStart(): string
     {
-
         return "\r";
-
     }
 
-    public static function clearToEnd()
+    /**
+     * Clear to the end of the line
+     * 
+     * @return string
+     */
+    public static function clearToEnd(): string
     {
-
         return "\033[K";
-
     }
 
 }

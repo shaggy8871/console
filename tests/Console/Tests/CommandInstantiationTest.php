@@ -10,7 +10,6 @@ class CommandInstantiationTest extends TestCase
 
     public function testCommandInstantiation()
     {
-
         $this->expectOutputString("AppSimple:" . print_r([], true));
 
         $console = new Runner();
@@ -25,12 +24,10 @@ class CommandInstantiationTest extends TestCase
         ]);
         // Run test
         $console->run();
-
     }
 
     public function testCommandInstantiationRegisterSingle()
     {
-
         $this->expectOutputString("AppSimple:" . print_r([], true));
 
         $console = new Runner();
@@ -43,12 +40,10 @@ class CommandInstantiationTest extends TestCase
         $console->register('app:simple', new Commands\AppSimple());
         // Run test
         $console->run();
-
     }
 
     public function testCommandInstantiationWithLongArgument()
     {
-
         $this->expectOutputString("AppSimple:" . print_r([
             'long' => 'argument'
         ], true));
@@ -66,12 +61,10 @@ class CommandInstantiationTest extends TestCase
         ]);
         // Run test
         $console->run();
-
     }
 
     public function testCommandInstantiationWithLongAndShortArgument()
     {
-
         $this->expectOutputString("AppSimple:" . print_r([
             'long' => 'argument',
             's' => 'arg'
@@ -92,12 +85,10 @@ class CommandInstantiationTest extends TestCase
         ]);
         // Run test
         $console->run();
-
     }
 
     public function testCommandInstantiationWithStandaloneShortArgument()
     {
-
         $this->expectOutputString("AppSimple:" . print_r([
             's' => '',
             'a' => 'b'
@@ -118,12 +109,10 @@ class CommandInstantiationTest extends TestCase
         ]);
         // Run test
         $console->run();
-
     }
 
     public function testCommandInstantiationWithAliases()
     {
-
         // For this test, args get rewritten which impacts the order of the array
         $this->expectOutputString("AppSimple:" . print_r([
             'a' => 'b', // must be first
@@ -146,12 +135,10 @@ class CommandInstantiationTest extends TestCase
         ]);
         // Run test
         $console->run();
-
     }
 
     public function testCommandInstantiationWithInvalidCommand()
     {
-
         $this->expectException(CommandNotFoundException::class);
 
         $console = new Runner();
@@ -166,12 +153,10 @@ class CommandInstantiationTest extends TestCase
         ]);
         // Run test
         $console->run();
-
     }
 
     public function testCommandInstantiationWithNoCommand()
     {
-
         $console = new Runner();
         // Register handlers
         $console->registerAll([
@@ -186,12 +171,10 @@ class CommandInstantiationTest extends TestCase
 
         // Run test
         $console->run();
-
     }
 
     public function testCommandInstantiationWithDescription()
     {
-
         $console = new Runner();
         // Register handlers
         $console->registerAll([
@@ -202,7 +185,6 @@ class CommandInstantiationTest extends TestCase
 
         // Run test
         $console->run();
-
     }
 
 }
