@@ -2,11 +2,10 @@
 
 namespace Console;
 
-class StdOut extends AbstractFormattableStream implements OutStreamInterface
-{
+class StdErr extends StdOut implements OutStreamInterface {
 
     /**
-     * Write content to stdout
+     * Write content to stderr
      * 
      * @param array the messages to write
      * 
@@ -14,7 +13,7 @@ class StdOut extends AbstractFormattableStream implements OutStreamInterface
      */
     public static function write(array $messages = []): void
     {
-        echo static::format($messages);
+        fwrite(STDERR,static::format($messages));
     }
 
 }
