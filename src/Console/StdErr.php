@@ -2,11 +2,7 @@
 
 namespace Console;
 
-/**
- * Switches between ansi and non-ansi output
- */
-
-class StdErr extends StdOut implements OutStream {
+class StdErr extends StdOut implements OutStreamInterface {
 
     /**
      * Write content to stderr
