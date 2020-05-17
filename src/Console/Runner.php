@@ -191,7 +191,7 @@ class Runner
      */
     public function showHelp(): void
     {
-        echo $this->getHelp();
+        StdErr::write([[$this->getHelp(),'white']]);
     }
 
     /**

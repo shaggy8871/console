@@ -6,13 +6,16 @@ namespace Console;
  * Switches between ansi and non-ansi output
  */
 
-class StdOut
-{
+interface OutStream {
+    static function write(array $messages = []);
+}
+
+abstract class FormattableStream {
 
     /**
-     * @var bool
+     * @var array
      */
-    protected static $ansiEnabled = true;
+    protected static $ansiEnabled = [ ];
 
     /**
      * Enable ansi mode
@@ -21,7 +24,7 @@ class StdOut
      */
     public static function enableAnsi(): void
     {
-        static::$ansiEnabled = true;
+        static::$ansiEnabled[ get_called_class() ] = true;
     }
 
     /**
@@ -31,7 +34,7 @@ class StdOut
      */
     public static function disableAnsi(): void
     {
-        static::$ansiEnabled = false;
+        static::$ansiEnabled[ get_called_class() ] = false;
     }
 
     /**
@@ -41,7 +44,7 @@ class StdOut
      */
     public static function isAnsiEnabled(): bool
     {
-        return static::$ansiEnabled;
+        return static::$ansiEnabled[ get_called_class() ] ?? true;
     }
 
     /**
@@ -57,7 +60,7 @@ class StdOut
 
         foreach($messages as $message) {
             list($text, $colors) = $message;
-            if (static::$ansiEnabled) {
+            if (static::isAnsiEnabled()) {
                 $output .= Decorate::color($text, $colors);
             } else {
                 $output .= $text;
@@ -66,6 +69,11 @@ class StdOut
 
         return $output;
     }
+
+}
+
+class StdOut extends FormattableStream implements OutStream
+{
 
     /**
      * Write content to stdout
